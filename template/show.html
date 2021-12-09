@@ -1,0 +1,23 @@
+{{ define "show.html" }}
+    {{ template "header.html"   }}
+      {{ template "menu.html"   }}
+<div class="container">
+  <table class="table caption-top">
+    <caption>List of users</caption>
+    <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Name</th>
+      <th scope="col">City</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">{{ .Id }}</th>
+      <td>{{ .Name }}</td>
+      <td>{{ .City }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+{{ end }}

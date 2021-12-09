@@ -1,0 +1,38 @@
+{{ define   "index.html"    }}
+    {{ template "header.html"   }}
+        {{ template "menu.html"     }}
+
+<div class="container">
+    <table class="table caption-top">
+        <caption>List of users</caption>
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">City</th>
+            <th scope="col">Show</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{ range .}}
+        <tr>
+            <th scope="row">{{ .Id }}</th>
+            <td>{{ .Name }}</td>
+            <td>{{ .City }}</td>
+            <td><a href="/show?Id={{ .Id }}">View</a></td>
+            <td><a href="/edit?Id={{ .Id }}">Edit</a></td>
+            <td><a href="/delete?Id={{ .Id }}">Delete</a><td>
+
+<!--            <td><button type="button" class="btn btn-primary">Primary</button></td>-->
+<!--            <td><button type="button" class="btn btn-danger">Danger</button></td>-->
+<!--            <td><button type="button" class="btn btn-success">Success</button></td>-->
+
+        </tr>
+        {{ end }}
+        </tbody>
+    </table>
+</div>
+    {{  template "footer.html"}}
+{{ end }}

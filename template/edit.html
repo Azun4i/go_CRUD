@@ -1,0 +1,14 @@
+{{  define "edit.html" }}
+
+    {{ template "header.html"   }}
+        {{ template "menu.html"   }}
+
+    <h2>Edit Name and Type</h2>
+    <form method="POST" action="update">
+        <input type="hidden" name="id" value="{{ .Id }}" />
+        <label> Name <input type="text" name="name" value="{{ .Name }}"/><br /></label>
+        <label> City <input type="text" name="city" value="{{ .City }}"/><br /></label>
+        <input type="submit" value="Save type" />
+    </form><br />
+
+{{ end }}
