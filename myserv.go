@@ -4,10 +4,9 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/lib/pq"
+	"html/template"
 	"log"
 	"net/http"
-	//"text/template"
-	"html/template"
 )
 
 type Citi struct {
@@ -39,26 +38,6 @@ var tmpl = template.Must(template.ParseGlob("template/*"))
 func Index(w http.ResponseWriter, r *http.Request) {
 	db := dbConnect()
 
-	// потом удалить
-	//mans := []Citi{}
-	//rows, err := db.Query("select * from city")
-	//if err != nil {
-	//	panic(err)
-	//}
-	//defer db.Close()
-	//for rows.Next() {
-	//	p := Citi{}
-	//	err := rows.Scan(&p.Name, &p.City)
-	//	if err != nil {
-	//		fmt.Println(err)
-	//		continue
-	//	}
-	//	mans = append(mans, p)
-	//}
-	//for _, p := range mans {
-	//	fmt.Println(p.Id, p.Name, p.City)
-	//}
-
 	selDB, err := db.Query("SELECT * FROM city ORDER BY id DESC")
 	if err != nil {
 		log.Fatal("can't SELECT in db ", err)
@@ -75,7 +54,6 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		pg = append(pg, p)
 	}
 
-	//err = tmpl.ExecuteTemplate(w, "Index", pg)
 	err = tmpl.ExecuteTemplate(w, "index.html", pg)
 	if err != nil {
 	}
@@ -98,13 +76,11 @@ func Show(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 	}
-	//tmpl.ExecuteTemplate(w, "Show", p)
 	tmpl.ExecuteTemplate(w, "show.html", p)
 	defer db.Close()
 }
 
 func New(w http.ResponseWriter, r *http.Request) {
-	//tmpl.ExecuteTemplate(w, "New", nil)
 	tmpl.ExecuteTemplate(w, "new.html", nil)
 }
 
@@ -134,10 +110,6 @@ func Insert(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		name := r.FormValue("name")
 		city := r.FormValue("city")
-		//insertDB, err := db.Prepare("INSERT INTO city (name,city) VALUES ($1,$2)")
-		//if err != nil {
-		//	fmt.Errorf("can't Insert ", err, name, city)
-		//}
 		_, err := db.Exec("INSERT INTO city (name, city) VALUES ($1,$2)", name, city)
 		if err != nil {
 			fmt.Errorf("can't Insert ", err, name, city)
@@ -154,14 +126,6 @@ func Update(w http.ResponseWriter, r *http.Request) {
 		name := r.FormValue("name")
 		city := r.FormValue("city")
 		id := r.FormValue("id")
-		//insForm, err := db.Prepare("UPDATE city SET name=$1, city=$2 WHERE id=$3")
-		//if err != nil {
-		//	panic(err.Error())
-		//}
-		//_, err = insForm.Exec(name, city, id)
-		//if err != nil {
-		//	panic(err.Error())
-		//}
 		_, err := db.Exec("UPDATE city SET name=$1, city=$2 WHERE id=$3", name, city, id)
 		if err != nil {
 		}
